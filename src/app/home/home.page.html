@@ -1,0 +1,54 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <ion-searchbar placeholder="Buscar Ciudad" (ionChange)="getCity($event)" debounce="750"></ion-searchbar>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="city">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>{{currentWeather?.location?.name}}, {{currentWeather?.location?.region}},
+          {{currentWeather?.location?.country}}</ion-card-subtitle>
+        <ion-card-title class="currentTemp"> {{currentWeather?.current?.temp_c}}º C</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <img src='{{currentWeather?.current?.condition?.icon}}' alt="nope">
+      </ion-card-content>
+    </ion-card>
+    <ion-title>Próximos Días</ion-title>
+
+    <ion-list>
+      <ion-item>
+        <ion-label>08:00</ion-label>
+        <ion-label>14:00</ion-label>
+        <ion-label>20:00</ion-label>
+      </ion-item>
+      <ion-item *ngFor="let day of currentWeather?.forecast?.forecastday">
+        <ion-label>
+          <ion-avatar>
+            <img [src]="day.hour[8].condition.icon" />
+          </ion-avatar>
+          <span class="forecastTemp"><ion-icon name="thermometer-outline"></ion-icon>{{day.hour[8].temp_c}}º C</span>
+        </ion-label>
+        <ion-label>
+          <ion-avatar>
+            <img [src]="day.hour[14].condition.icon" />
+          </ion-avatar>
+          <span class="forecastTemp"><ion-icon name="thermometer-outline"></ion-icon>{{day.hour[14].temp_c}}º C</span>
+        </ion-label>
+        <ion-label>
+          <ion-avatar>
+            <img [src]="day.hour[20].condition.icon" />
+          </ion-avatar>
+          <span class="forecastTemp"><ion-icon name="thermometer-outline"></ion-icon>{{day.hour[20].temp_c}}º C</span>
+        </ion-label>
+      </ion-item>
+
+    </ion-list>
+  </div>
+
+</ion-content>
